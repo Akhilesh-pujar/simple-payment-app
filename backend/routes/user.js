@@ -1,5 +1,5 @@
 const express = require("express");
-const {Puser} = require("../db");
+const {Paytmuser} = require("../db");
 const jwt = require("jsonwebtoken");
 const {JWT_SECERET} = require("../config")
 const zod = require("zod");
@@ -22,13 +22,13 @@ router.post("/signup", async(req,res)=>{
             return res.json({msg:"Incorrect Inputs/parsing went wrong"})
         }
         //database mai find karenge taki already agar user hai tho usko reject karne ke liye
-        const existinguser = await Puser.findOne({
+        const existinguser = await Paytmuser.findOne({
             username:req.body.username})
             if(existinguser){
                 return res.json({msg:"Email already taken/Account already exist"})
             }
     
-            const user = await Puser.create({
+            const user = await Paytmuser.create({
                 username:req.body.username,
                 firstname:req.body.firstname,
                 lastname:req.body.lastname,
@@ -72,7 +72,7 @@ router.post("/signin", async(req,res)=>{
         return res.json({msg:"Body parsing went wrong/wrong input"})
     }
 
-    const user = await Puser.findById({
+    const user = await Paytmuser.findById({
         username:req.body.username,
         password:req.body.password
     
@@ -106,7 +106,7 @@ router.put("/updateuser",authmiddleware, async(req,res)=>{
         if(!success){
          return res.json({msg:"parsing went wrong"});
         }
-        await Puser.updateOne(req.body,{
+        await Paytmuser.updateOne(req.body,{
          _id:req.userId
         })
         res.json({msg:"Update Successfull"})
@@ -122,7 +122,7 @@ router.put("/updateuser",authmiddleware, async(req,res)=>{
 router.get("/bulk", async (req, res) => {
     const filter = req.query.filter || "";
 
-    const users = await Puser.find({
+    const users = await Paytmuser.find({
         $or: [{
             firstName: {
                 "$regex": filter

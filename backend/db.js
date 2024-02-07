@@ -51,8 +51,8 @@ const accountSchema = new mongoose.Schema({
     }
 });
 
-const Account = mongoose.model('Account', accountSchema);
+const PayAccount = mongoose.model('PayAccount', accountSchema);
 
-const Puser = mongoose.model('Puser', User);
+const Paytmuser = mongoose.model('Paytmuser', User);
 
-module.exports={Puser, Account};
+module.exports={Paytmuser, PayAccount};
