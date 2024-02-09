@@ -1,10 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const rootuser = require("./user")
-const accountrouter = require("./acount")
-
-router.post("/user",rootuser)
-router.post("/account",accountrouter)
+const accountrouter = require("./account")
+router.use("/user",rootuser)
+router.use("/account",accountrouter)
 
 
 

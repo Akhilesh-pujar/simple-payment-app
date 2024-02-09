@@ -3,7 +3,7 @@ import  { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { usernameState, firstNameState, lastNameState, passwordState } from "../states";
-// import Loader from "../components/Loader";
+import Loader from "../components/Loader";
 
 export default function Signup() {
     
@@ -19,7 +19,7 @@ export default function Signup() {
     async function handleSignup() {
         setShowLoader(true)
         try{
-            const res = await fetch("http://localhost:3000/api/v1/user/signup", {
+            const res = await fetch("http://localhost:3000/api/v1/user/signup/", {
                 method: "POST",
                 body: JSON.stringify({
                     username: username,
@@ -72,7 +72,7 @@ export default function Signup() {
                 <input className="border-2 p-1 mb-2 mt-1" type="text" value={lastName} onChange={e => setLastName(e.target.value)}/>
                 
                 <label htmlFor="password">Password</label>
-                <input className="border-2 p-1 mb-2 mt-1" type="text" value={password} onChange={e => setPassword(e.target.value)}/>
+                <input className="border-2 p-1 mb-2 mt-1" type="password" value={password} onChange={e => setPassword(e.target.value)}/>
                 
                 <button onClick={handleSignup} className="border-black border-2 rounded-xl bg-black text-white w-1/2 m-auto hover:bg-teal-400">Sign Up</button>
                 <div className="flex justify-center">
@@ -81,7 +81,7 @@ export default function Signup() {
                 </div>
             </div>
             {showLoader && <div className="absolute w-full h-full flex items-center justify-center bg-gray-200 opacity-80">
-            {/* <Loader></Loader> */}
+            <Loader/>
             </div>}
         </div>
     )
