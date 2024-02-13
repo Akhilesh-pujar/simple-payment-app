@@ -1,5 +1,5 @@
 const express = require("express");
-const {Paytmuser} = require("../db");
+const {Paytmuser, PayAccount} = require("../db");
 const jwt = require("jsonwebtoken");
 const {JWT_SECERET} = require("../config")
 const zod = require("zod");
@@ -7,7 +7,7 @@ const router = express.Router();
 const {authmiddleware} = require("../middleware")
 
 const signupBody= zod.object({
-    username:zod.string(),
+    username:zod.string().email(),
     firstname:zod.string(),
     lastname:zod.string(),
     password:zod.string()
@@ -35,7 +35,7 @@ router.post("/signup", async(req,res)=>{
                 password:req.body.password
             })
             const userId = user._id
-            await Account.create({
+            await PayAccount.create({
                 userId,
                 balance: 1 + Math.random() * 10000
             })
@@ -118,7 +118,7 @@ router.put("/updateuser",authmiddleware, async(req,res)=>{
  
 })
 
-
+ //all users
 router.get("/bulk", async (req, res) => {
     const filter = req.query.filter || "";
 
@@ -136,10 +136,11 @@ router.get("/bulk", async (req, res) => {
 
     res.json({
         user: users.map(user => ({
+            _id: user._id,
             username: user.username,
             firstName: user.firstname,
             lastName: user.lastname,
-            _id: user._id
+            
         }))
     })
 })

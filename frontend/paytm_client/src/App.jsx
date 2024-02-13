@@ -1,26 +1,25 @@
-import {BrowserRouter as Router, Routes, Route} from "react-router-dom"
-import { RecoilRoot } from "recoil"
+import {BrowserRouter as Router, Routes , Route} from "react-router-dom"
 import Home from "./components/Home"
-import Signup from "./pages/Signup"
-import Signin from "./pages/Signin"
+import Signup from './components/Signup'
+import Signin from './components/Signin'
+import Dashboard from "./components/Dashboard"
+import { ToastContainer } from "react-toastify"
 function App() {
 
 
   return (
-    <>
+    <div>
     <Router>
-      <RecoilRoot>
-        <Routes>
-        <Route path="/" element={<Home/>}/>
-        <Route path="/signup" element={<Signup/>}/>
-        <Route path="/signin" element={<Signin/>}/>
-
-        </Routes>
-      
-      </RecoilRoot>
+      <Routes>
+        <Route path='/' element={<Home/>}/>
+        <Route path='/signup' element={<Signup/>}/>
+        <Route path='/signin' element={<Signin/>}/>
+        <Route path="dashboard" element={<Dashboard/>}/>
+      </Routes>
     </Router>
-     
-    </>
+    <ToastContainer/>
+      
+    </div>
   )
 }
 
