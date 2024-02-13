@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
+const dotenv = require("dotenv")
 
-const uri = MONGODB_URL
+dotenv.config();
+const uri = process.env.MONGODB_URL;
 mongoose.connect(uri)
 
 const User = new mongoose.Schema({
