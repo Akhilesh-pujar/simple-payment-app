@@ -11,7 +11,7 @@ export default function Navbar(){
 
     const token = localStorage.getItem("myToken")
     useEffect(() => {
-        fetch("https://mern-paytm-backend.vercel.app/api/v1/user/userInfo", {
+        fetch("https://simple-payment-app.vercel.app/api/v1/user/bulk", {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -29,7 +29,7 @@ export default function Navbar(){
     return(
         <div className="flex items-center border-2px border-black h-20 justify-between shadow-md">
             <span>
-                <h1 className="text-bold text-teal-500 inline text-2xl ml-4 mt-8 drop-shadow">Paytm</h1>
+                <h1 className="text-bold text-indigo-400 inline text-xl ml-4 mt-8 drop-shadow">Paytm</h1>
                 <h1 className="inline text-bold text-2xl mt-8 drop-shadow">App</h1>
             </span>
             {showLoader ? 
