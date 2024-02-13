@@ -51,7 +51,7 @@ export default function SendMoneyModel(){
             </div>
             <p className="text-xs font-medium mt-2 mb-2">Amount (in Rs)</p>
             <input required="required" value={amount} onChange={e => setAmount(e.target.value)} className="border border-inherit mb-3 p-2" type="number" placeholder="Enter Amount" />
-            <button onClick={handleTransaction} className="bg-teal-500 rounded-md drop-shadow p-2 hover:bg-teal-600">Initiate Transfer</button>
+            <button onClick={handleTransaction} className="bg-indigo-500 rounded-md drop-shadow p-2 hover:bg-teal-600">Initiate Transfer</button>
         </div>
         {showLoader && <div className="absolute w-full h-full flex flex-col items-center justify-center bg-gray-200 opacity-75">
             <Loader></Loader>

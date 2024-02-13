@@ -21,7 +21,7 @@ export default function YourBalance(){
 
     return (
         <>
-            <h1 className="text-bold text-xl m-5">Your Balance: {userBalance}</h1>
+            <h1 className="text-bold text-xl m-5 font-light">Your Balance: {userBalance}</h1>
             <hr />
         </>
     )

@@ -54,10 +54,10 @@ export default function Signin(){
     }
 
     return (
-        <div className="h-screen flex justify-center items-center bg-gray-200">
+        <div className="h-screen flex justify-center items-center bg-gray-800">
         <div className="rounded-2xl p-6 flex flex-col justify-center bg-white drop-shadow-xl">
             <div className="text-center">
-                <h1 className="text-3xl text-bold mb-2">Sign-In</h1>
+                <h1 className="text-2xl text-bold mb-2">Sign-In</h1>
                 <p className="m-auto w-5/6 mb-2 text-gray-700">Enter your Credentials to access your account</p>
             </div>
             <label htmlFor="username">Username</label>

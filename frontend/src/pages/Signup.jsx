@@ -15,7 +15,8 @@ export default function Signup() {
 
     const [showLoader, setShowLoader] = useState(false);
 
-    async function handleSignup() {
+    async function handleSignup(e) {
+        e.preventDefault();
         setShowLoader(true)
         try{
             const res = await fetch("https://simple-payment-app.vercel.app/api/v1/user/signup", {
@@ -55,10 +56,10 @@ export default function Signup() {
     }
     
     return (
-        <div className="h-screen flex justify-center items-center bg-gray-200">
+        <div className="h-screen flex justify-center items-center bg-gray-800">
             <div className="rounded-2xl p-6 flex flex-col justify-center bg-white drop-shadow-lg">
                 <div className="text-center">
-                    <h1 className="text-3xl text-bold mb-2">Sign Up</h1>
+                    <h1 className="text-2xl text-bold mb-2">Sign Up</h1>
                     <p className="m-auto w-5/6 mb-2 text-gray-700">Enter your information to create an account</p>
                 </div>
                 <label htmlFor="username">Username</label>
