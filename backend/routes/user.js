@@ -124,11 +124,11 @@ router.get("/bulk", async (req, res) => {
 
     const users = await Paytmuser.find({
         $or: [{
-            firstName: {
+            firstname: {
                 "$regex": filter
             }
         }, {
-            lastName: {
+            lastname: {
                 "$regex": filter
             }
         }]
@@ -136,10 +136,11 @@ router.get("/bulk", async (req, res) => {
 
     res.json({
         user: users.map(user => ({
-            _id: user._id,
+            
             username: user.username,
             firstName: user.firstname,
             lastName: user.lastname,
+            _id: user._id,
             
         }))
     })

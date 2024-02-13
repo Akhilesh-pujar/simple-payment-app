@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const uri = "mongodb+srv://paytm_access:ghHjvynmLOTO8ycV@cluster0.xkcpzov.mongodb.net/?retryWrites=true&w=majority"
+const uri = MONGODB_URL
 mongoose.connect(uri)
 
 const User = new mongoose.Schema({
