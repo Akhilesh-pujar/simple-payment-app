@@ -20,7 +20,7 @@ export default function Signup() {
     async function handleSignup(e) {
         e.preventDefault();
    
-            await axios.post("http://localhost:3000/api/v1/user/signup",{
+            await axios.post("https://simple-payment-app.vercel.app/api/v1/user/signup",{
               username, firstname, lastname,password
              })
              .then((response)=>{

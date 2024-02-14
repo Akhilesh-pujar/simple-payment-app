@@ -38,7 +38,7 @@ export default function FindUsers(){
         setShowLoader(true); // Show loader when fetching new data
 
         try {
-            const res = await axios.get(`http://localhost:3000/api/v1/user/bulk/?filter=${filter}`, {
+            const res = await axios.get(`https://simple-payment-app.vercel.app/api/v1/user/bulk/?filter=${filter}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

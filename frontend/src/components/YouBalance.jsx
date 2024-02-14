@@ -15,7 +15,7 @@ export default function YourBalance(){
     // const signature = parts[2];
    
     useEffect(() => {
-        fetch("http://localhost:3000/api/v1/account/balance", {
+        fetch("https://simple-payment-app.vercel.app/api/v1/account/balance", {
             method: "GET",
             headers: {
             "Content-Type": "application/json",

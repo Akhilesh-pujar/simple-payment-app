@@ -11,7 +11,7 @@ export default function Navbar() {
 
     useEffect(() => {
         const token = localStorage.getItem("myToken");
-        fetch("http://localhost:3000/api/v1/user/bulk", {
+        fetch("https://simple-payment-app.vercel.app/api/v1/user/bulk", {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
