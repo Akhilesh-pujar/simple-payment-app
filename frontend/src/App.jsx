@@ -5,6 +5,7 @@ import Signin from "./pages/Signin";
 import Dashbord from "./pages/Dashbord";
 import SendMoneyModel from "./pages/SendMoney";
 import Redirector from "./pages/Redirector";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
           }
         ></Route>
       </Routes>
+      <ToastContainer/>
     </BrowserRouter>
   )
 }

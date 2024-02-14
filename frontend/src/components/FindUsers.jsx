@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import UserCard from "./UserCard";
-import { useRecoilStateLoadable } from "recoil";
+import { constSelector, useRecoilStateLoadable } from "recoil";
 import { usersState } from "../states";
 import Loader from "./Loader";
+import axios from "axios";
 
 function useDebounce(filter, delay){
     const [debouncedValue, setDebouncedValue] = useState(filter);
@@ -23,7 +24,7 @@ function useDebounce(filter, delay){
 export default function FindUsers(){
 
     const [filter, setFilter] = useState("");
-    const [users, setUsers] = useRecoilStateLoadable(usersState);  // loadable
+    const [usersLoadable, setUsers] = useRecoilStateLoadable(usersState);  // loadable
     const [showLoader, setShowLoader] = useState(true);
     const token = localStorage.getItem("myToken")
 
@@ -34,27 +35,40 @@ export default function FindUsers(){
     }, [debouncedFilter])
 
     async function handleSearch() {
-        const res = await fetch(`https://simple-payment-app.vercel.app/api/v1/user/?filter=${filter}`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
-            }
-        })
-        if(!res.ok){
-            alert(`HTTP error! status: ${res.status}`);
-            setShowLoader(false);
-            return;
-        }
-        const data = await res.json();
+        setShowLoader(true); // Show loader when fetching new data
 
-        if(data.length > 10){
-            const slicedData = data.slice(0, 10);
-            setUsers(slicedData);
-        }else{
-            setUsers(data);
+        try {
+            const res = await axios.get(`http://localhost:3000/api/v1/user/bulk/?filter=${filter}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            if (res.status !== 200) {
+                throw new Error(`HTTP error! status: ${res.status}`);
+            }
+
+            const data = res.data;
+     
+
+            if (data && data.user && data.user.length > 0) {
+                const userss = data.user;
+                if(userss.length>10){
+                    const slicedData = userss.slice(0, 10);
+                setUsers(slicedData);
+
+                }
+                else{
+                    setUsers(userss)
+                }
+                
+            } else {
+                console.log("no users found", data)
+            }
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setShowLoader(false); // Hide loader after request completion
         }
-        setShowLoader(false);
     }
 
     return (
@@ -69,13 +83,13 @@ export default function FindUsers(){
                         </svg>
                     </div>
                     <input type="search" value={filter} onChange={e => setFilter(e.target.value)} id="default-search" className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-500" placeholder="Find Users..." required />
-                    
-                   
                 </div>
             </form>
             {showLoader ? 
             <div className="mt-10"><Loader /></div> : 
-            users.contents.map((user, idx) => <UserCard key={idx} index={idx+1} fullName={`${user.firstName} ${user.lastName}`} id={user.userId} username={user.username}/>)}
+            usersLoadable.state === 'hasValue' && Array.isArray(usersLoadable.contents) ? 
+            usersLoadable.contents.map((user, idx) => <UserCard key={idx} index={idx+1} fullName={`${user.firstName} ${user.lastName}`} id={user.userId} username={user.username}/>) : 
+            <div>No users found</div>}
         </>
     )
 }

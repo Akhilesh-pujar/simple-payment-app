@@ -6,13 +6,13 @@ const { PayAccount} = require('../db');
 const router = express.Router();
 
 router.get("/balance", authmiddleware, async (req, res) => {
+    const userId = req.userId
     const account = await PayAccount.findOne({
-        userId: req.userId
+        userId: userId
     });
 
     res.json({
-        balance: account.balance
-    })
+        balance: (account.balance/100)});
 });
 
 router.post("/transfer", authmiddleware, async (req, res) => {

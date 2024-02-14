@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { usernameState, passwordState } from "../states";
 import Loader from "../components/Loader";
-
+import {toast} from "react-toastify"
+import axios from "axios";
 export default function Signin(){
     
     const [username, setUsername] = useRecoilState(usernameState); //not used
@@ -12,41 +13,22 @@ export default function Signin(){
 
     const navigate = useNavigate();
 
-    async function handleSignin(){
+    async function handleSignin(e){
+        e.preventDefault();
         
-        setShowLoader(true);
-
-        try {
-            const res = await fetch("https://simple-payment-app.vercel.app/api/v1/user/signin", {
-                method: "POST",
-                body: JSON.stringify({
-                    username: username,
-                    password: password
-                }),
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            })
-    
-            if(!res.ok){
-                alert(`HTTP error! status ${res.status}`);
-                setShowLoader(false);
-                return
-            }
-            
-            const data = await res.json();
-
-            setShowLoader(false);
-
-            alert(data.msg);
-            
-            localStorage.setItem("myToken", data.token);
-
-            navigate("/dashbord");
-
-        }catch(err) {
-            console.log("Request Crashed!");
-        }
+        try{
+            await axios.post("http://localhost:3000/api/v1/user/signin",{
+              username, password
+             })
+             .then((response)=>{
+             console.log(response.data)
+           
+             navigate("/dashbord")
+             })
+           }
+           catch(error){
+            console.log(error);
+           }
     }
     
     function navigateToSignup(){
@@ -60,11 +42,11 @@ export default function Signin(){
                 <h1 className="text-2xl text-bold mb-2">Sign-In</h1>
                 <p className="m-auto w-5/6 mb-2 text-gray-700">Enter your Credentials to access your account</p>
             </div>
-            <label htmlFor="username">Username</label>
-            <input className="border-2 p-1 mb-2 mt-1" type="text" value={username} onChange={e => setUsername(e.target.value)}/>
+        
+            <input className="border-2 p-1 mb-2 mt-1" type="text" value={username} onChange={e => setUsername(e.target.value)} placeholder="Username"/>
             
-            <label htmlFor="password">Password</label>
-            <input className="border-2 p-1 mb-2 mt-1" type="text" value={password} onChange={e => setPassword(e.target.value)}/>
+          
+            <input className="border-2 p-1 mb-2 mt-1" type="text" value={password} onChange={e => setPassword(e.target.value)} placeholder="Password"/>
             
             <button onClick={handleSignin} className="border-black border-2 rounded-xl bg-black text-white mt-2 mb-2 w-1/2 m-auto hover:bg-teal-400">Sign-In</button>
             <div className="flex justify-center">
